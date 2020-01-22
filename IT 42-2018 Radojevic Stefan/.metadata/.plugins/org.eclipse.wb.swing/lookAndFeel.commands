@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<add id="laf_1578011141580" name="SeaGlass" class-name="com.seaglasslookandfeel.SeaGlassLookAndFeel" jar-path="C:\Users\PC\Downloads\seaglasslookandfeel-0.2.jar" category-id="__wbp_laf_root"/>
+</commands>

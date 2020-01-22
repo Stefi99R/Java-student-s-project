@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.swing.DefaultListModel"/>
+<fullyQualifiedTypeName name="java.awt.Toolkit"/>
+<fullyQualifiedTypeName name="java.awt.Dimension"/>
+<fullyQualifiedTypeName name="java.awt.Point"/>
+<fullyQualifiedTypeName name="java.awt.GraphicsEnvironment"/>
+<fullyQualifiedTypeName name="javax.swing.Icon"/>
+<fullyQualifiedTypeName name="java.security.Key"/>
+<fullyQualifiedTypeName name="javax.swing.KeyStroke"/>
+<fullyQualifiedTypeName name="java.awt.event.KeyEvent"/>
+<fullyQualifiedTypeName name="javax.swing.JComponent"/>
+<fullyQualifiedTypeName name="frames.StackFrame"/>
+<fullyQualifiedTypeName name="com.sun.jdi.StackFrame"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="dialogs.DlgAddToStack"/>
+<fullyQualifiedTypeName name="javax.swing.UIManager"/>
+<fullyQualifiedTypeName name="javax.swing.UIManager.LookAndFeelInfo"/>
+<fullyQualifiedTypeName name="dialogs.DlgDrawCircle"/>
+<fullyQualifiedTypeName name="dialogs.DlgDrawDonut"/>
+<fullyQualifiedTypeName name="org.graalvm.compiler.options.OptionType"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="frames.DrawingFrame"/>
+<fullyQualifiedTypeName name="javax.swing.JColorChooser"/>
+<fullyQualifiedTypeName name="classes.Shape"/>
+<fullyQualifiedTypeName name="modifyDialogs.DlgPointModify"/>
+<fullyQualifiedTypeName name="modifyDialogs.DlgLineModify"/>
+<fullyQualifiedTypeName name="classes.Line"/>
+<fullyQualifiedTypeName name="modifyDialogs.DlgRectangleModify"/>
+<fullyQualifiedTypeName name="classes.Rectangle"/>
+<fullyQualifiedTypeName name="modifyDialogs.DlgCircleModify"/>
+<fullyQualifiedTypeName name="classes.Circle"/>
+<fullyQualifiedTypeName name="modifyDialogs.DlgDonutModify"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="classes.Donut"/>
+<fullyQualifiedTypeName name="java.lang.NumberFormatException"/>
+<fullyQualifiedTypeName name="classes.Point"/>
+</qualifiedTypeNameHistroy>
