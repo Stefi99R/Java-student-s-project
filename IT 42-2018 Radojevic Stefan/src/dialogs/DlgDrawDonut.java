@@ -15,12 +15,13 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class DlgDrawDonut extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	public static JTextField txtInnerRadius;
-	public static JTextField txtOuterRadius;
-	public boolean isOkDonut;
+	private JTextField txtInnerRadius;
+	private JTextField txtOuterRadius;
+	private boolean isOkDonut;
 
 	/**
 	 * Launch the application.
@@ -39,6 +40,7 @@ public class DlgDrawDonut extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgDrawDonut() {
+		setTitle("Draw donut");
 		setBounds(100, 100, 326, 259);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,13 +94,17 @@ public class DlgDrawDonut extends JDialog {
 							Integer.parseInt(txtOuterRadius.getText());
 						} catch(NumberFormatException exe) {
 							JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
 						}
 						if(Integer.parseInt(txtInnerRadius.getText()) < 0 || Integer.parseInt(txtOuterRadius.getText()) < 0) {
 							JOptionPane.showMessageDialog(null, "Both fields must contain numbers greater than 0!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
 						} else if(txtInnerRadius.getText().trim().equals("") || txtOuterRadius.getText().trim().equals("")) {
 							JOptionPane.showMessageDialog(null, "All fields must be filled in!", "Error", JOptionPane.ERROR_MESSAGE, null);
-						} else if(Integer.parseInt(txtInnerRadius.getText()) > Integer.parseInt(txtOuterRadius.getText())) {
-							JOptionPane.showMessageDialog(null, "Inner radius can't be greater than the outer!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
+						} else if(Integer.parseInt(txtInnerRadius.getText()) >= Integer.parseInt(txtOuterRadius.getText())) {
+							JOptionPane.showMessageDialog(null, "Inner radius can't be greater than or equal to the outer radius!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
 						} else {
 							isOkDonut = true;
 							dispose();
@@ -121,5 +127,30 @@ public class DlgDrawDonut extends JDialog {
 			}
 		}
 	}
+
+	public JTextField getTxtInnerRadius() {
+		return txtInnerRadius;
+	}
+
+	public void setTxtInnerRadius(JTextField txtInnerRadius) {
+		this.txtInnerRadius = txtInnerRadius;
+	}
+
+	public JTextField getTxtOuterRadius() {
+		return txtOuterRadius;
+	}
+
+	public void setTxtOuterRadius(JTextField txtOuterRadius) {
+		this.txtOuterRadius = txtOuterRadius;
+	}
+
+	public boolean isOkDonut() {
+		return isOkDonut;
+	}
+
+	public void setOkDonut(boolean isOkDonut) {
+		this.isOkDonut = isOkDonut;
+	}
+	
 
 }

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,16 +15,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+@SuppressWarnings("serial")
 public class DlgAddToStack extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -33,9 +31,12 @@ public class DlgAddToStack extends JDialog {
 	private JTextField txtY;
 	private JTextField txtWidth;
 	private JTextField txtHeight;
-	public boolean isOK;
-	public boolean remove;
-	public static Rectangle rec;
+	private boolean isOK;
+	private boolean remove;
+	private Rectangle rec;
+
+	private JButton okButton = new JButton("Insert");
+	private JButton btnRemove = new JButton("Remove");
 
 	/**
 	 * Launch the application.
@@ -169,14 +170,17 @@ public class DlgAddToStack extends JDialog {
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			btnRemove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					remove = true;
+					dispose();
+				}
+			});
 
-			final JButton okButton = new JButton("Insert");
-			JButton btnRemove = new JButton("Remove");
 			buttonPane.add(btnRemove);
 			{
-				if(StackFrame.adding) {
-					btnRemove.setVisible(false);
-					okButton.setVisible(true);
+				StackFrame add = new StackFrame();
+				if(add.isAdding()) {
 					okButton.addKeyListener(new KeyAdapter() {
 						@Override
 						public void keyPressed(KeyEvent e) {
@@ -209,7 +213,7 @@ public class DlgAddToStack extends JDialog {
 							getToolkit().beep();
 							isOK = false;
 						} else {
-							rec = new Rectangle(Float.parseFloat(getTxtX()),Float.parseFloat(getTxtY()),Float.parseFloat(getTxtWidth()),Float.parseFloat(getTxtHeight()));
+							setRec(new Rectangle(Float.parseFloat(getTxtX()),Float.parseFloat(getTxtY()),Float.parseFloat(getTxtWidth()),Float.parseFloat(getTxtHeight())));
 							isOK = true;
 							dispose();
 						}
@@ -218,15 +222,7 @@ public class DlgAddToStack extends JDialog {
 					okButton.setActionCommand("OK");
 					getRootPane().setDefaultButton(okButton);
 				} else {
-					okButton.setVisible(false);
-					btnRemove.setVisible(true);
-					btnRemove.addActionListener(new ActionListener() {
-						
-						public void actionPerformed(ActionEvent e) {
-							remove = true;
-							dispose();
-						}
-					});
+					btnRemove.getAction();
 					}
 				}
 				
@@ -296,5 +292,46 @@ public class DlgAddToStack extends JDialog {
 	public void setTxtHeight(JTextField txtHeight) {
 		this.txtHeight = txtHeight;
 	}
+
+	public Rectangle getRec() {
+		return rec;
+	}
+
+	public void setRec(Rectangle rec) {
+		this.rec = rec;
+	}
+
+	public boolean isOK() {
+		return isOK;
+	}
+
+	public void setOK(boolean isOK) {
+		this.isOK = isOK;
+	}
+
+	public boolean isRemove() {
+		return remove;
+	}
+
+	public void setRemove(boolean remove) {
+		this.remove = remove;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
+	}
+
+	public JButton getBtnRemove() {
+		return btnRemove;
+	}
+
+	public void setBtnRemove(JButton btnRemove) {
+		this.btnRemove = btnRemove;
+	}
+	
 
 }

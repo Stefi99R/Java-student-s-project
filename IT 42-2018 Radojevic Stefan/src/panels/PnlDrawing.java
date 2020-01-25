@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import classes.Shape;
 import classes.SurfaceShape;
 
+@SuppressWarnings("serial")
 public class PnlDrawing extends JPanel {
 	
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();

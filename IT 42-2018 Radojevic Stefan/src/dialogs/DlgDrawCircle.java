@@ -16,11 +16,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class DlgDrawCircle extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	public static JTextField txtRadius;
-	public boolean isOk;
+	private JTextField txtRadius;
+	private boolean isOk;
 
 	/**
 	 * Launch the application.
@@ -40,6 +41,7 @@ public class DlgDrawCircle extends JDialog {
 	 * Create the dialog
 	 */
 	public DlgDrawCircle() {
+		setTitle("Draw circle");
 		setBounds(100, 100, 263, 199);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,11 +80,12 @@ public class DlgDrawCircle extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
-							Integer.parseInt(txtRadius.getText());
+							validate(txtRadius.getText());
 						} catch(NumberFormatException exc) {
 							JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "Error", JOptionPane.ERROR_MESSAGE, null);
 							getToolkit().beep();
 							isOk = false;
+							return;
 						}
 						if(txtRadius.getText().trim().equals("")) {
 							JOptionPane.showMessageDialog(null, "Radius text field can't be empty!", "Error", JOptionPane.ERROR_MESSAGE, null);
@@ -115,6 +118,28 @@ public class DlgDrawCircle extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	public JTextField getTxtRadius() {
+		return txtRadius;
+	}
+
+	public void setTxtRadius(JTextField txtRadius) {
+		this.txtRadius = txtRadius;
+	}
+
+	public boolean isOk() {
+		return isOk;
+	}
+
+	public void setOk(boolean isOk) {
+		this.isOk = isOk;
+	}
+	public void validate(String radius) {
+		String exp = "^(([1-9]{1})([0-9]+)?)$";
+        if(!radius.matches(exp)){  
+        	throw new NumberFormatException();
+        }
 	}
 
 }

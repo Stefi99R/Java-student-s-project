@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+@SuppressWarnings("serial")
 public class DlgCircleModify extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -48,6 +49,7 @@ public class DlgCircleModify extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgCircleModify() {
+		setTitle("Modify circle");
 		setModal(true);
 		setBounds(100, 100, 345, 342);
 		getContentPane().setLayout(new BorderLayout());
@@ -138,12 +140,19 @@ public class DlgCircleModify extends JDialog {
 				JButton okButton = new JButton("Save changes");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if(Integer.parseInt(txtRadius.getText()) < 1) {
+							JOptionPane.showMessageDialog(null, "Radius can't be less than 1!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
+						} 
+						try {
+							validate(txtX.getText(),txtY.getText(), txtRadius.getText());
+						} catch(NumberFormatException exep) {
+							JOptionPane.showMessageDialog(null, "Only numbers are allowed in these fields!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
+						}
 						if(txtX.getText().trim().equals("") || txtY.getText().trim().equals("") || txtRadius.getText().trim().equals("")) {
 							JOptionPane.showMessageDialog(null, "All fields must be filled in!", "Error", JOptionPane.ERROR_MESSAGE, null);
-						} else if(Integer.parseInt(txtRadius.getText()) < 1) {
-							JOptionPane.showMessageDialog(null, "Radius can't be less than 1!", "Error", JOptionPane.ERROR_MESSAGE, null);
-						}
-						try {
+						} else {
 							int x = Integer.parseInt(txtX.getText());
 							int y = Integer.parseInt(txtY.getText());
 							int radius = Integer.parseInt(txtRadius.getText());
@@ -154,9 +163,8 @@ public class DlgCircleModify extends JDialog {
 							circleMod.setColor(outlineColor);
 							circleMod.setSurfaceColor(fillColor);
 							dispose();
-						} catch(NumberFormatException exep) {
-							JOptionPane.showMessageDialog(null, "Only numbers are allowed in these fields!", "Error", JOptionPane.ERROR_MESSAGE, null);
 						}
+						
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -184,6 +192,13 @@ public class DlgCircleModify extends JDialog {
 		btnFillColor.setBackground(circleMod.getSurfaceColor());
 		outlineColor = circleMod.getColor();
 		fillColor = circleMod.getSurfaceColor();
+	}
+	public void validate(String x, String y, String radius) {
+		String exp1 = "^(([1-9]{1})([0-9]+)?)$";
+		String exp2 = "^(([+-])?([1-9]{1})([0-9]+)?)$";
+        if(!x.matches(exp2) || !y.matches(exp2) || !radius.matches(exp1)){
+        	throw new NumberFormatException();
+        }
 	}
 
 }

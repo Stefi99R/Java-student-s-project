@@ -41,6 +41,12 @@ public class Donut extends Circle {
 		new Line(new Point(super.getCenter().getX()-innerRadius,super.getCenter().getY()),new Point(super.getCenter().getX()+innerRadius,super.getCenter().getY())).selected(g);
 		new Line(new Point(super.getCenter().getX(),super.getCenter().getY()-innerRadius),new Point(super.getCenter().getX(),super.getCenter().getY()+innerRadius)).selected(g);
 	}
+	
+	public boolean contains(int x, int y) {
+		if((new Point(x,y).distance(getCenter()) <= getRadius()) && (new Point(x,y).distance(getCenter()) >= innerRadius)) {
+			return true;
+		} else return false;
+	}
 
 	public int getInnerRadius() {
 		return innerRadius;

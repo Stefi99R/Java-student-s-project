@@ -9,13 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.GridBagLayout;
-import java.awt.FlowLayout;
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
 import javax.swing.border.TitledBorder;
-
-import com.sun.org.apache.xml.internal.serializer.utils.Utils;
 
 import classes.Circle;
 import classes.Donut;
@@ -33,17 +29,14 @@ import modifyDialogs.DlgPointModify;
 import modifyDialogs.DlgRectangleModify;
 import panels.PnlDrawing;
 
-import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Cursor;
 
 import javax.swing.border.BevelBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -54,6 +47,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class DrawingFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -281,6 +275,15 @@ public class DrawingFrame extends JFrame {
 		});
 		panelSouthRight.add(btnDelete);
 		
+		JButton btnClearThePanel = new JButton("Clear the panel");
+		btnClearThePanel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pnlDrawing.getShapes().clear();
+				pnlDrawing.repaint();
+			}
+		});
+		panelSouthRight.add(btnClearThePanel);
+		
 		pnlDrawing.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -318,8 +321,8 @@ public class DrawingFrame extends JFrame {
 						DlgDrawRectangle drawRectangle = new DlgDrawRectangle();
 						drawRectangle.setVisible(true);
 						
-						if(drawRectangle.isOK) {
-							Rectangle r = new Rectangle(e.getX(),e.getY(),Float.parseFloat(DlgDrawRectangle.txtwidth.getText()),Float.parseFloat(DlgDrawRectangle.txtHeight.getText()));
+						if(drawRectangle.isOK()) {
+							Rectangle r = new Rectangle(e.getX(),e.getY(),Float.parseFloat(drawRectangle.getTxtwidth().getText()),Float.parseFloat(drawRectangle.getTxtHeight().getText()));
 							r.setSurfaceColor(fillColor);
 							r.setColor(shapeColor);
 							pnlDrawing.getShapes().add(r);
@@ -327,8 +330,8 @@ public class DrawingFrame extends JFrame {
 					} else if(tgbCircle.isSelected()) {
 						DlgDrawCircle drawCircle = new DlgDrawCircle();
 						drawCircle.setVisible(true);
-						if(drawCircle.isOk) {
-							Circle c = new Circle(click,Integer.parseInt(DlgDrawCircle.txtRadius.getText()));
+						if(drawCircle.isOk()) {
+							Circle c = new Circle(click,Integer.parseInt(drawCircle.getTxtRadius().getText()));
 							c.setColor(shapeColor);
 							c.setSurfaceColor(fillColor);
 							pnlDrawing.getShapes().add(c);
@@ -337,8 +340,8 @@ public class DrawingFrame extends JFrame {
 						DlgDrawDonut drawDonut = new DlgDrawDonut();
 						drawDonut.setVisible(true);
 						
-						if(drawDonut.isOkDonut) {
-							Donut d = new Donut(click,Integer.parseInt(drawDonut.txtOuterRadius.getText()),Integer.parseInt(drawDonut.txtInnerRadius.getText()));
+						if(drawDonut.isOkDonut()) {
+							Donut d = new Donut(click,Integer.parseInt(drawDonut.getTxtOuterRadius().getText()),Integer.parseInt(drawDonut.getTxtInnerRadius().getText()));
 							d.setColor(shapeColor);
 							d.setSurfaceColor(fillColor);
 							pnlDrawing.getShapes().add(d);

@@ -2,7 +2,6 @@ package frames;
 
 import java.util.Comparator;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.DefaultListModel;
@@ -24,14 +23,14 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class SortFrame extends JFrame {
 
 	private JPanel contentPane;
-	public static DefaultListModel<String> dlmSort = new DefaultListModel<String>();
-	public ArrayList<Rectangle> sortedList = new ArrayList<Rectangle>();
+	private static DefaultListModel<String> dlmSort = new DefaultListModel<String>();
+	private ArrayList<Rectangle> sortedList = new ArrayList<Rectangle>();
 
 	/**
 	 * Launch the application.
@@ -64,6 +63,7 @@ public class SortFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("unchecked")
 	public SortFrame() {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -85,10 +85,11 @@ public class SortFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DlgAddToStack add = new DlgAddToStack();
 				add.setLocationRelativeTo(null);
+				add.getBtnRemove().setVisible(false);
 				add.setVisible(true);
-				if(add.isOK) {
-					dlmSort.addElement(DlgAddToStack.rec.toStringSort());
-					sortedList.add(DlgAddToStack.rec);
+				if(add.isOK()) {
+					dlmSort.addElement(add.getRec().toStringSort());
+					sortedList.add(add.getRec());
 				}
 			}
 		});
@@ -133,9 +134,15 @@ public class SortFrame extends JFrame {
 					.addContainerGap())
 		);
 		
+		@SuppressWarnings("rawtypes")
 		JList list = new JList();
 		spList.setViewportView(list);
 		list.setModel(dlmSort);
 		contentPane.setLayout(gl_contentPane);
 	}
+
+	public static DefaultListModel<String> getDlmSort() {
+		return dlmSort;
+	}
+	
 }

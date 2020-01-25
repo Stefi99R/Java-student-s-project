@@ -22,6 +22,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class DlgLineModify extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -31,7 +32,8 @@ public class DlgLineModify extends JDialog {
 	private JTextField txtStartY;
 	private JTextField txtEndX;
 	private JTextField txtEndY;
-	public JButton btnColor;
+	private JButton btnColor;
+
 
 	/**
 	 * Launch the application.
@@ -50,6 +52,7 @@ public class DlgLineModify extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgLineModify() {
+		setTitle("Line modify");
 		setModal(true);
 		setBounds(100, 100, 450, 327);
 		getContentPane().setLayout(new BorderLayout());
@@ -133,8 +136,10 @@ public class DlgLineModify extends JDialog {
 				JButton okButton = new JButton("Save changes");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(txtStartX.getText().trim().equals("") || txtStartY.getText().trim().equals("") || txtEndX.getText().trim().equals("") || txtEndY.getText().trim().equals("")) 							
+						if(txtStartX.getText().trim().equals("") || txtStartY.getText().trim().equals("") || txtEndX.getText().trim().equals("") || txtEndY.getText().trim().equals("")) {
 							JOptionPane.showMessageDialog(null, "All fields must be filled in!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
+						}
 						try {
 							int startX = Integer.parseInt(txtStartX.getText());
 							int startY = Integer.parseInt(txtStartY.getText());
@@ -174,5 +179,6 @@ public class DlgLineModify extends JDialog {
 		lineColor = lineMod.getColor();
 		btnColor.setBackground(lineMod.getColor());
 	}
+
 
 }

@@ -1,11 +1,6 @@
 package frames;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
-import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,21 +14,19 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.SystemColor;
 
+@SuppressWarnings("serial")
 public class StackFrame extends JFrame {
 
 	public static JPanel contentPaneStack;
-	public static DefaultListModel<String> dlmStack = new DefaultListModel<String>();
-	public static boolean adding = true;
+	private static DefaultListModel<String> dlmStack = new DefaultListModel<String>();
+	private boolean adding = true;
 
 	/**
 	 * Launch the application.
@@ -56,6 +49,7 @@ public class StackFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public StackFrame() {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -78,9 +72,11 @@ public class StackFrame extends JFrame {
 				DlgAddToStack add = new DlgAddToStack();
 				add.setLocationRelativeTo(null);
 				adding = true;
+				add.getBtnRemove().setVisible(false);
+				add.getOkButton().setVisible(true);
 				add.setVisible(true);
-				if(add.isOK) {
-					dlmStack.add(0, DlgAddToStack.rec.toStringStack());
+				if(add.isOK()) {
+					dlmStack.add(0, add.getRec().toStringStack());
 				}
 			}
 		});
@@ -104,8 +100,10 @@ public class StackFrame extends JFrame {
 					rmv.getTxtYField().setText(split[4]);
 					rmv.getTxtWidthField().setText(split[7]);
 					rmv.getTxtHeightField().setText(split[9]);
+					rmv.getBtnRemove().setVisible(true);
+					rmv.getOkButton().setVisible(false);
 					rmv.setVisible(true);
-					if(rmv.remove) {
+					if(rmv.isRemove()) {
 						dlmStack.remove(0);
 					}
 					adding = true;
@@ -144,5 +142,17 @@ public class StackFrame extends JFrame {
 		contentPaneStack.setLayout(gl_contentPaneStack);
 		rectangleStack.setModel(dlmStack);
 		
+	}
+
+	public static DefaultListModel<String> getDlmStack() {
+		return dlmStack;
+	}
+
+	public boolean isAdding() {
+		return adding;
+	}
+
+	public void setAdding(boolean adding) {
+		this.adding = adding;
 	}
 }

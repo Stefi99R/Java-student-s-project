@@ -8,8 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import classes.Rectangle;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
@@ -19,12 +17,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+@SuppressWarnings("serial")
 public class DlgDrawRectangle extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	public static JTextField txtwidth;
-	public static JTextField txtHeight;
-	public boolean isOK;
+	private JTextField txtwidth;
+	private JTextField txtHeight;
+	private boolean isOK;
 
 	/**
 	 * Launch the application.
@@ -43,6 +42,7 @@ public class DlgDrawRectangle extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgDrawRectangle() {
+		setTitle("Draw rectangle");
 		setBounds(100, 100, 318, 238);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -143,12 +143,30 @@ public class DlgDrawRectangle extends JDialog {
         	throw new NumberFormatException();
         }
 	}
+	
 
-	public static JTextField getTxtwidth() {
+	public JTextField getTxtHeight() {
+		return txtHeight;
+	}
+
+	public void setTxtHeight(JTextField txtHeight) {
+		this.txtHeight = txtHeight;
+	}
+
+	public boolean isOK() {
+		return isOK;
+	}
+
+	public void setOK(boolean isOK) {
+		this.isOK = isOK;
+	}
+
+	public JTextField getTxtwidth() {
 		return txtwidth;
 	}
 
 	public void setTxtwidth(JTextField txtwidth) {
 		this.txtwidth = txtwidth;
 	}
+	
 }

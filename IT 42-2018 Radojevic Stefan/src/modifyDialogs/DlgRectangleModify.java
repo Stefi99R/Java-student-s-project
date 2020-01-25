@@ -10,7 +10,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import classes.Point;
 import classes.Rectangle;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,8 +18,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
+@SuppressWarnings("serial")
 public class DlgRectangleModify extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -33,7 +32,7 @@ public class DlgRectangleModify extends JDialog {
 	private Color fillColor;
 	private JButton btnColor;
 	private JButton btnFillColor;
-	public boolean isOkRectangleModify;
+	private boolean isOkRectangleModify;
 
 	/**
 	 * Launch the application.
@@ -52,6 +51,7 @@ public class DlgRectangleModify extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgRectangleModify() {
+		setTitle("Modify rectangle");
 		setModal(true);
 		setBounds(100, 100, 508, 319);
 		getContentPane().setLayout(new BorderLayout());
@@ -149,17 +149,14 @@ public class DlgRectangleModify extends JDialog {
 				JButton okButton = new JButton("Save changes");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						isOkRectangleModify = true;
-						if(txtX.getText().trim().equals("") || txtY.getText().trim().equals("") || txtWidth.getText().trim().equals("") || txtHeight.getText().trim().equals("")) {
-							JOptionPane.showMessageDialog(null, "All fields must be filled in!", "Error", JOptionPane.ERROR_MESSAGE, null);
-							isOkRectangleModify = false;
-							return;
-						} else if(Float.parseFloat(txtWidth.getText()) < 0 || Float.parseFloat(txtHeight.getText()) < 0) {
-							JOptionPane.showMessageDialog(null, "Width and height must be greater than 0!", "Error", JOptionPane.ERROR_MESSAGE, null);
-							isOkRectangleModify = false;
-							return;
-						}
+						isOkRectangleModify = true; 
 						try {
+							validate(txtX.getText(),txtY.getText(),txtWidth.getText(),txtHeight.getText());
+						} catch(NumberFormatException ec) {
+							JOptionPane.showMessageDialog(null, "No entry or the entry is invalid!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							isOkRectangleModify = false; 
+							return;
+							}
 							float x = Float.parseFloat(txtX.getText());
 							float y = Float.parseFloat(txtY.getText());
 							float width = Float.parseFloat(txtWidth.getText());
@@ -172,10 +169,7 @@ public class DlgRectangleModify extends JDialog {
 								recMod.setColor(outlineColor);
 								recMod.setSurfaceColor(fillColor);
 								dispose();
-							}
-							} catch(NumberFormatException ec) {
-							JOptionPane.showMessageDialog(null, "Incorrect data type inserted!", "Error", JOptionPane.ERROR_MESSAGE, null);
-							isOkRectangleModify = false; }
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -205,5 +199,21 @@ public class DlgRectangleModify extends JDialog {
 		fillColor = recMod.getSurfaceColor();
 		outlineColor = recMod.getColor();
 	}
+	public void validate(String x, String y, String width, String height) {
+		String exp1 ="^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$";
+		String exp2 = "^(([1-9])([0-9]+)?([.][0-9]*)?|[.][0-9]+)$";
+        if(!x.matches(exp1) || !y.matches(exp1) || !width.matches(exp2) || !height.matches(exp2)){  
+        	throw new NumberFormatException();
+        }
+	}
+
+	public boolean isOkRectangleModify() {
+		return isOkRectangleModify;
+	}
+
+	public void setOkRectangleModify(boolean isOkRectangleModify) {
+		this.isOkRectangleModify = isOkRectangleModify;
+	}
+	
 
 }

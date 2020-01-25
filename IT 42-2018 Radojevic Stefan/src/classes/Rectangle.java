@@ -3,7 +3,6 @@ package classes;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import frames.SortFrame;
 import frames.StackFrame;
 
 public class Rectangle extends SurfaceShape {
@@ -29,7 +28,7 @@ public class Rectangle extends SurfaceShape {
 	}
 	
 	public String toStringStack() {
-		return "Rectangle #" + (StackFrame.dlmStack.getSize()+ 1) + ": Upper left point coordinates: (" + String.valueOf(getX()) + ", "
+		return "Rectangle #" + (StackFrame.getDlmStack().getSize()+ 1) + ": Upper left point coordinates: (" + String.valueOf(getX()) + ", "
 				 + String.valueOf(getY()) + "), Width: "
 				+ String.valueOf(getWidth()) + ", Height: " + String.valueOf(getHeight());
 	}

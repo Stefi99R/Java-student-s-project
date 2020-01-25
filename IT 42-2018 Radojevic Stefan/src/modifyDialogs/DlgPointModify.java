@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import classes.Point;
-import frames.DrawingFrame;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -22,6 +21,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class DlgPointModify extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -29,7 +29,7 @@ public class DlgPointModify extends JDialog {
 	private JTextField txtY;
 	private Color pointColor;
 	private Point pointMod;
-	public JButton btnColor;
+	private JButton btnColor;
 	
 	/**
 	 * Launch the application.
@@ -48,6 +48,7 @@ public class DlgPointModify extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgPointModify() {
+		setTitle("Modify point");
 		setModal(true);
 		setBounds(100, 100, 274, 312);
 		getContentPane().setLayout(new BorderLayout());
@@ -117,8 +118,10 @@ public class DlgPointModify extends JDialog {
 				JButton okButton = new JButton("Save changes");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(txtX.getText().trim().equals("") || txtY.getText().trim().equals("")) 							
+						if(txtX.getText().trim().equals("") || txtY.getText().trim().equals("")) {
 							JOptionPane.showMessageDialog(null, "All fields must be filled in!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
+						}
 						try {
 							int x = Integer.parseInt(txtX.getText());
 							int y = Integer.parseInt(txtY.getText());

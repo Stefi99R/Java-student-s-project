@@ -1,6 +1,5 @@
 package classes;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Circle extends SurfaceShape {

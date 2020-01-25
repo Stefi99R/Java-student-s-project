@@ -22,6 +22,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class DlgDonutModify extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -52,6 +53,7 @@ public class DlgDonutModify extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgDonutModify() {
+		setTitle("Modify donut");
 		setModal(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -151,14 +153,23 @@ public class DlgDonutModify extends JDialog {
 				JButton okButton = new JButton("Save changes");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(txtX.getText().trim().equals("") || txtY.getText().trim().equals("") || txtOuter.getText().trim().equals("") || txtInner.getText().trim().equals("")) {
-							JOptionPane.showMessageDialog(null, "All fields must be filled in!", "Error", JOptionPane.ERROR_MESSAGE, null);
-						} else if(Integer.parseInt(txtOuter.getText()) < 1 || (Integer.parseInt(txtInner.getText())) < 1) {
+						 if(Integer.parseInt(txtOuter.getText()) < 1 || (Integer.parseInt(txtInner.getText())) < 1) {
 							JOptionPane.showMessageDialog(null, "Neither outer, nor inner radius cannot be less than 1!", "Error", JOptionPane.ERROR_MESSAGE, null);
-						} else if(Integer.parseInt(txtOuter.getText()) < (Integer.parseInt(txtInner.getText()))) {
+							return;
+						 }
+						 try {
+								validate(txtX.getText(),txtY.getText(),txtOuter.getText(),txtInner.getText());
+							} catch(NumberFormatException exce) {
+								JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "Error", JOptionPane.ERROR_MESSAGE, null);
+								return;
+							}
+						 if(txtX.getText().trim().equals("") || txtY.getText().trim().equals("") || txtOuter.getText().trim().equals("") || txtInner.getText().trim().equals("")) {
+							JOptionPane.showMessageDialog(null, "All fields must be filled in!", "Error", JOptionPane.ERROR_MESSAGE, null);
+							return;
+						 } else if(Integer.parseInt(txtOuter.getText()) < (Integer.parseInt(txtInner.getText()))) {
 							JOptionPane.showMessageDialog(null, "Inner radius cannot be greater than the outer radius!", "Error", JOptionPane.ERROR_MESSAGE, null);
-						}
-						try {
+							return;
+						 } else {
 							int x = Integer.parseInt(txtX.getText());
 							int y = Integer.parseInt(txtY.getText());
 							int innerRadius = Integer.parseInt(txtInner.getText());
@@ -170,8 +181,6 @@ public class DlgDonutModify extends JDialog {
 							donutMod.setColor(outlineColor);
 							donutMod.setSurfaceColor(fillColor);
 							dispose();
-						} catch(NumberFormatException exce) {
-							JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "Error", JOptionPane.ERROR_MESSAGE, null);
 						}
 					}
 				});
@@ -201,6 +210,13 @@ public class DlgDonutModify extends JDialog {
 		btnFillColor.setBackground(donutMod.getSurfaceColor());
 		outlineColor = donutMod.getColor();
 		fillColor = donutMod.getSurfaceColor();
+	}
+	public void validate(String x, String y, String radius, String innerRadius) {
+		String exp1 = "^(([1-9]{1})([0-9]+)?)$";
+		String exp2 = "^(([+-])?([1-9]{1})([0-9]+)?)$";
+        if(!x.matches(exp2) || !y.matches(exp2) || !radius.matches(exp1) || !innerRadius.matches(exp1)){
+        	throw new NumberFormatException();
+        }
 	}
 
 }
